@@ -21,13 +21,12 @@
   @if (!carregando() && !erro()) {
     <p>Total de produtos: {{ totalProdutos() }}</p>
     <hr />
-     @for (item of produtos(); track $index) {
+    @for (item of produtos(); track $index) {
       <app-produto
         [nome]="item.nome"
         [preco]="item.preco"
         (produtoSelecionado)="exibirProduto($event)"
         (produtoAdicionado)="adicionarAoCarrinho($event)"
-
       />
     }
   }
@@ -41,9 +40,17 @@
     }
   </h2>
 
-  <p><button (click)="adicionarProduto()">Adicionar Produto</button></p>
+  <p>
+    <button mat-raised-button color="primary" (click)="adicionarProduto()">
+      Adicionar Produto
+    </button>
+  </p>
 
-  <p><button (click)="substituirProdutos()">Substituir Lista</button></p>
+  <p>
+    <button mat-stroked-button color="accent" (click)="substituirProdutos()">
+      Substituir Lista
+    </button>
+  </p>
 
   <h2>Total de produtos: {{ totalProdutos() }}</h2>
 
