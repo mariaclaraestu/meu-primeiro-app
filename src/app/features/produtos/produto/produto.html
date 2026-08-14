@@ -8,23 +8,19 @@
     color: white;
   }
 
-  h3{
+  h3 {
     color: rgb(255, 249, 249);
   }
-
 </style>
-
 
 <div class="produto-card">
   <h3>{{ nome }}</h3>
   <p>{{ preco | currency: 'BRL' }}</p>
 
-  <button (click)="selecionarProduto()">Selecionar {{ nome }}</button> <!--Adicionou essa linha aqui-->
+  <button (click)="selecionarProduto()">Selecionar {{ nome }}</button>
+  <!--Adicionou essa linha aqui-->
+  <button (click)="adicionarAoCarrinho()">Adicionar ao carrinho</button>
 </div>
-
-
-
-              
 
 <!-- 
 ==============================================================
