@@ -1,8 +1,8 @@
 import { Component, signal, computed, effect, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 
-import { ProdutosService } from '../produtos.service';
-
+import { ProdutosService } from '../../../core/services/produtos.service';
+import { CarrinhoService } from '../../../core/services/carrinho.service';
 import { Produto } from '../produto/produto';
 
 @Component({
@@ -13,6 +13,11 @@ import { Produto } from '../produto/produto';
 })
 export class ListaProdutos {
   private produtosService = inject(ProdutosService);
+  carrinhoService = inject(CarrinhoService);
+
+  quantidadeCarrinho = this.carrinhoService.quantidade;
+  totalCarrinho = this.carrinhoService.total;
+
   //========================================
   //                   SIGNALS
   //=============================================
@@ -23,10 +28,7 @@ export class ListaProdutos {
 
   produtoSelecionado = signal<string | null>(null);
 
-  // o começo de uma nova era (Carrinho de compras)
-  carrinho = signal<{ nome: string; preco: number }[]>([]);
-
-   erro = signal<string | null>(null);
+  erro = signal<string | null>(null);
 
   //computed
   totalProdutos = computed(() => this.produtos().length); // observa outro sinal automaticamente
@@ -34,12 +36,6 @@ export class ListaProdutos {
   valorTotal = computed(() => {
     return this.produtos().reduce((total, item) => total + item.preco, 0); // reduce -> pega so quem tá interessada
   }); // essa linha faz a soma dos produtos.
-
-  quantidadeCarrinho = computed(() => this.carrinho().length);
-
-  totalCarrinho = computed(() => {
-    return this.carrinho().reduce((total, item) => total + item.preco, 0);
-  });
 
   constructor() {
     // carrega da API
@@ -96,6 +92,6 @@ export class ListaProdutos {
   }
 
   adicionarAoCarrinho(produto: { nome: string; preco: number }) {
-    this.carrinho.update((listaAtual) => [...listaAtual, produto]);
+    this.carrinhoService.adicionar(produto);
   }
 }
