@@ -1,63 +1,47 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CurrencyPipe } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { CurrencyPipe, UpperCasePipe } from '@angular/common';
-import { PrecoFormatadoPipe } from '../../../shared/pipes/preco-formatado-pipe';
-
-
-
+import { ItemCarrinho } from '../../../core/models/item-carrinho';
 @Component({
   selector: 'app-produto',
-  imports: [CurrencyPipe, MatButtonModule, MatCardModule], //UpperCasePipe, PrecoFormatadoPipe],
+  imports: [CurrencyPipe, MatButtonModule, MatCardModule],
   templateUrl: './produto.html',
   styleUrl: './produto.css',
 })
 export class Produto {
-
   @Input() nome: string = '';
   @Input() preco: number = 0;
   @Output() produtoSelecionado = new EventEmitter<string>();
-   @Output() produtoAdicionado = new EventEmitter<{
-    nome: string;
-    preco: number;
-  }>();
-
+  // O evento agora usa o tipo compartilhado ItemCarrinho.
+  @Output() produtoAdicionado = new EventEmitter<ItemCarrinho>();
   selecionarProduto() {
     this.produtoSelecionado.emit(this.nome);
   }
-
-    adicionarAoCarrinho() {
+  adicionarAoCarrinho() {
+    // O produto enviado ao carrinho segue o modelo compartilhado.
     this.produtoAdicionado.emit({
       nome: this.nome,
-      preco: this.preco
+      preco: this.preco,
     });
   }
-
 }
 //=================================================
 //              Aprendi no dia 04.08
 //=================================================
 
-
 //  nome = 'Produto Exemplo';
 //  preco = 149.99;
-
-
 
 //=================================================
 //              Aprendi no dia 04.08
 //=================================================
 
-
-
 //=================================================
 //              Aprendi no dia 05.08
 //=================================================
 //  mostrarPreco = true;
- 
- 
- 
- 
+
 //  produtos = [
 //   { nome: 'Monitor', preco: 1500 },
 //   { nome: 'Mouse',    preco: 150  },
@@ -65,11 +49,6 @@ export class Produto {
 //   {nome: 'Caixa de Som', preco: 90}
 // ];
 
-
-
 //=================================================
 //              Aprendi no dia 05.08
 //=================================================
-
-
-
